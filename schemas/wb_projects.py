@@ -51,9 +51,6 @@ class WbProjectUpdate(WbProjectBase):
     date_modified: Optional[datetime] = Field(default_factory=datetime.now)  # Set to current time by default
     date_deleted: Optional[datetime] = Field(default=None)  # Nullable, defaults to None
     date_archived: Optional[datetime] = Field(default=None) 
-    # date_modified: datetime = Field(default_factory=datetime.now)
-    # date_deleted: Optional[datetime] = None
-    # date_archived: Optional[datetime] = None
     notes: Optional[str] = None
 
 class WbProjectResponse(WbProjectBase):

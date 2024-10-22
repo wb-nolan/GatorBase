@@ -45,11 +45,6 @@ class WbProjects(Base):
     date_modified = Column(TIMESTAMP(timezone=True), server_default=func.now(), onupdate=func.now(), nullable=False)
     date_deleted = Column(TIMESTAMP(timezone=True), default=None, nullable=True)
     date_archived = Column(TIMESTAMP(timezone=True), default=None, nullable=True)
-    # date_added = Column(DateTime(timezone=True), nullable=False, default=func.now())
-    # date_modified = Column(DateTime(timezone=True), server_default=func.now(),
-    #                        onupdate=func.now(), nullable=False)
-    # date_deleted = Column(DateTime, default=None, nullable=True)
-    # date_archived = Column(DateTime, default=None, nullable=True)
     notes = Column(String(255))
 
     #### Establishing the relationship with md5_verify_queue
