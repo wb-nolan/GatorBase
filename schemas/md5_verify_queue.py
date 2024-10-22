@@ -1,7 +1,7 @@
 from pydantic import BaseModel, Field
 from datetime import datetime
 from enum import Enum
-from models.md5_verify_queue import TaskTypeStatus, Status
+from models.md5_verify_queue import TaskTypeStatus, Status, VerifyStatus
 from typing import Optional
 
 class md5VerifyQueueBase(BaseModel):
@@ -11,11 +11,11 @@ class md5VerifyQueueBase(BaseModel):
     log: Optional[str] = None
     task_type: Optional[TaskTypeStatus] = None
     status: Status
-    verify_status: Status
+    verify_status: VerifyStatus
     compare_status: Status
     progress: Optional[str] = None
     eta: Optional[str] = None
-    proj_name: str # FK - wb_projects
+    proj_name: Optional[str] = None # FK - wb_projects
     md5_path: Optional[str] = None
     md5_name: Optional[str] = None
     md5_size: Optional[str] = None
@@ -47,11 +47,11 @@ class md5VerifyQueueUpdate(md5VerifyQueueBase):
     log: Optional[str] = None
     task_type: Optional[TaskTypeStatus] = None
     status: Status
-    verify_status: Status
+    verify_status: VerifyStatus
     compare_status: Status
     progress: Optional[str] = None
     eta: Optional[str] = None
-    proj_name: str # FK - wb_projects
+    proj_name: Optional[str] = None # FK - wb_projects
     md5_path: Optional[str] = None
     md5_name: Optional[str] = None
     md5_size: Optional[str] = None
