@@ -19,7 +19,7 @@ class Status(str, Enum): # combined for CharScan, VerifyStatus, CompareStatus, &
     NA = 'NA'
     SUCCESS = 'SUCCESS' 
 
-class md5_verify_queue(Base):
+class md5VerifyQueue(Base):
     __tablename__ = 'md5_verify_queue'
 
     id = Column(Integer, primary_key=True)
@@ -34,8 +34,8 @@ class md5_verify_queue(Base):
     compare_status = Column(Enum(Status), nullable=False, default='PENDING') ### TODO CHECK FOR ENUMs
     progress = Column(String(255))
     eta = Column(String(50))
-    # proj_name = Column(String(50)) # Changed to ForeignKey Reference
-    proj_name = Column(String(50), ForeignKey('wb_projects.proj_name'))
+    proj_name = Column(String(50)) # Changed to ForeignKey Reference
+    # proj_name = Column(String(50), ForeignKey('wb_projects.proj_name'))
     md5_path = Column(String(255))
     md5_name = Column(String(255))
     md5_size = Column(String(15))
@@ -52,11 +52,10 @@ class md5_verify_queue(Base):
     src_size = Column(String(25))
     
     # CHANGE to STRINGS?
-    date_added = Column(DateTime(timezone=True), nullable=False, default=func.now())
-    date_started = Column(DateTime(timezone=True))
-    date_completed = Column(DateTime(timezone=True))#, server_default=func.now(), nullable=False)
-    date_modified = Column(DateTime(timezone=True), server_default=func.now(),
-                           onupdate=func.now(), nullable=False)
-
+    date_added = Column(TIMESTAMP(timezone=True), server_default=func.now(), nullable=False)
+    date_modified = Column(TIMESTAMP(timezone=True), server_default=func.now(), onupdate=func.now(), nullable=False)
+    date_deleted = Column(TIMESTAMP(timezone=True), default=None, nullable=True)
+    date_archived = Column(TIMESTAMP(timezone=True), default=None, nullable=True)
     ###### Establishing the relationship with wb_projects
-    wb_project = relationship('md5_verify_queue', back_populates='md5_verify')
+    # wb_project = relationship('WbProjects', back_populates='md5_verify_queues')
+

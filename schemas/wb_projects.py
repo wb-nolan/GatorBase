@@ -1,29 +1,31 @@
 from pydantic import BaseModel
 from datetime import datetime
 from enum import Enum
-from models.wb_projects import DeletionProgress, ArchiveProgress
+from models.wb_projects import DeletionProgress, ArchiveProgress, ActiveEnum
 from typing import Optional
+from pydantic import BaseModel, Field
+
 
 
 class WbProjectBase(BaseModel):
     user_id: str
     fileset: int
-    active: bool
-    in_alfred: bool
-    proj_name: str
+    active: ActiveEnum #bool
+    in_alfred: ActiveEnum #ool
+    proj_name: Optional[str] = None #str
     studio: Optional[str] = None
     archivebarcode: Optional[str] = None
-    lto: str
-    proj_path: str
+    lto: Optional[str] = None #str
+    proj_path: Optional[str] = None #str
     proj_size: Optional[int] = None
     proj_size_gb: Optional[int] = None # Changed to Optional
     expected_end_date: Optional[datetime] = None
     deletion_progress: Optional[DeletionProgress] = None
     archive_progress: Optional[ArchiveProgress] = None
-    date_added: datetime = Optional[datetime] = None 
-    date_modified: datetime = Optional[datetime] = None
-    date_deleted: Optional[datetime] = None
-    date_archived: Optional[datetime] = None
+    date_added: Optional[datetime] = Field(default_factory=datetime.now)  # Set to current time by default
+    date_modified: Optional[datetime] = Field(default_factory=datetime.now)  # Set to current time by default
+    date_deleted: Optional[datetime] = Field(default=None)  # Nullable, defaults to None
+    date_archived: Optional[datetime] = Field(default=None)
     notes: Optional[str] = None
 
 class WbProjectCreate(WbProjectBase):
@@ -33,8 +35,8 @@ class WbProjectCreate(WbProjectBase):
 class WbProjectUpdate(WbProjectBase):
     user_id: Optional[str] = None
     fileset: Optional[int] = None
-    active: Optional[bool] = None
-    in_alfred: Optional[bool] = None
+    active: ActiveEnum 
+    in_alfred: ActiveEnum
     proj_name: Optional[str] = None
     studio: Optional[str] = None
     archivebarcode: Optional[str] = None
@@ -45,9 +47,13 @@ class WbProjectUpdate(WbProjectBase):
     expected_end_date: Optional[datetime] = None
     deletion_progress: Optional[DeletionProgress] = None
     archive_progress: Optional[ArchiveProgress] = None
-    date_modified: datetime = Field(default_factory=datetime.now)
-    date_deleted: Optional[datetime] = None
-    date_archived: Optional[datetime] = None
+    date_added: Optional[datetime] = Field(default_factory=datetime.now)  # Set to current time by default
+    date_modified: Optional[datetime] = Field(default_factory=datetime.now)  # Set to current time by default
+    date_deleted: Optional[datetime] = Field(default=None)  # Nullable, defaults to None
+    date_archived: Optional[datetime] = Field(default=None) 
+    # date_modified: datetime = Field(default_factory=datetime.now)
+    # date_deleted: Optional[datetime] = None
+    # date_archived: Optional[datetime] = None
     notes: Optional[str] = None
 
 class WbProjectResponse(WbProjectBase):

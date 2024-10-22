@@ -7,7 +7,7 @@ from typing import Optional
 class md5VerifyQueueBase(BaseModel):
     user_id: Optional[str] = None
     hostname: Optional[str] = None
-    char_scanlog: Status 
+    char_scan: Status 
     log: Optional[str] = None
     task_type: Optional[TaskTypeStatus] = None
     status: Status
@@ -30,10 +30,10 @@ class md5VerifyQueueBase(BaseModel):
     src_name: Optional[str] = None
     src_path: Optional[str] = None
     src_size: Optional[str] = None
-    date_added: datetime = Optional[datetime] = None 
-    date_started: datetime = Optional[datetime] = None  
+    date_added: Optional[datetime] = None 
+    date_started: Optional[datetime] = None  
     date_completed: Optional[datetime] = None 
-    date_modified: datetime = Optional[datetime] = None
+    date_modified: Optional[datetime] = None
 
 class md5VerifyQueueCreate(md5VerifyQueueBase):
     date_added: datetime = Field(default_factory=datetime.now) 
@@ -43,7 +43,7 @@ class md5VerifyQueueCreate(md5VerifyQueueBase):
 class md5VerifyQueueUpdate(md5VerifyQueueBase):
     user_id: Optional[str] = None
     hostname: Optional[str] = None
-    char_scanlog: Status 
+    char_scan: Status 
     log: Optional[str] = None
     task_type: Optional[TaskTypeStatus] = None
     status: Status
@@ -66,11 +66,8 @@ class md5VerifyQueueUpdate(md5VerifyQueueBase):
     src_name: Optional[str] = None
     src_path: Optional[str] = None
     src_size: Optional[str] = None
-
     # update when Status moves from PENDING to IN_PROGESS
     date_started: Optional[datetime] = None
-
-    # date_added: datetime 
     date_completed: Optional[datetime] = None
     date_modified: datetime = Field(default_factory=datetime.now) 
 
