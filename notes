@@ -1,0 +1,17 @@
+from fastapi import FastAPI
+from datetime import datetime
+
+app = FastAPI()
+
+@app.post("/items/", response_model=ItemResponse)
+def create_item(item: ItemCreate):
+    # Here you would typically create the item in your database.
+    # For example, assuming you use SQLAlchemy:
+    new_item = Item(
+        name=item.name,
+        description=item.description,
+        category_id=item.category_id,
+        date_created=datetime.utcnow(),  # Set the creation date to the current UTC time
+    )
+    # Save to the database and return the created item
+    return new_item
