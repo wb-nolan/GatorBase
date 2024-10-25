@@ -39,8 +39,8 @@ class md5VerifyQueue(Base):
     compare_status = Column(Enum(Status), nullable=False, default=Status.PENDING) ### TODO CHECK FOR ENUMs
     progress = Column(String(255))
     eta = Column(String(50))
-    proj_name = Column(String(50)) # Change to FK - wb_projects #
-    # proj_name = Column(String(50), ForeignKey('wb_projects.proj_name'))
+    # proj_name = Column(String(50)) # Change to FK - wb_projects #
+    proj_name = Column(String(50), ForeignKey('wb_projects.proj_name'))
     md5_path = Column(String(255))
     md5_name = Column(String(255))
     md5_size = Column(String(15))
@@ -61,5 +61,5 @@ class md5VerifyQueue(Base):
     date_started = Column(TIMESTAMP(timezone=True), default=None, nullable=True)
     
     ###### Establishing the relationship with wb_projects
-    # wb_project = relationship('WbProjects', back_populates='md5_verify_queues')
+    wb_project = relationship('WbProjects', back_populates='md5_verify_queues')
 

@@ -49,3 +49,10 @@ def delete_wb_project(wb_project_id: int, db: Session = Depends(get_db)):
     db.delete(wb_project)
     db.commit()
     return {"detail": "Project deleted successfully"}
+
+# @router.get("/search", response_model=list[wb_projects_schemas.WbProjectResponse])
+# def search_projects(
+#     active: str = Query(None, description="Is Active Yes or No"),
+#     name: str = Query(None, description="Name to Filter"),
+    
+# )

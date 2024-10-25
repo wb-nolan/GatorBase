@@ -48,4 +48,4 @@ class WbProjects(Base):
     notes = Column(String(255))
 
     #### Establishing the relationship with md5_verify_queue
-    # md5_verify_queues = relationship('md5VerifyQueue', back_populates='wb_project')
+    md5_verify_queues = relationship('md5VerifyQueue', back_populates='wb_project')
