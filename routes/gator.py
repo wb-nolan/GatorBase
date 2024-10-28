@@ -11,9 +11,7 @@ def sanitize_column_name(df: pd.DataFrame) -> pd.DataFrame:
     return df
     
 def sanitize_dataframe(df):
-    # Replace NaN with None to handle SQL null values
     df = df.replace({float('nan'): None, 'nan': None, pd.NA: None, None: None})
-    # You can apply further column sanitization here if needed
     return df
 
 
@@ -48,10 +46,18 @@ async def upload_file(file:UploadFile=File(...), db: Session = Depends(get_db)):
     df = sanitize_column_name(df)
     df = sanitize_dataframe(df)
     
+    duplicates = []
     for _, row in df.iterrows():
+        barcode = row.get('barcode')
+        existing_entry = db.query(Gator).filter(Gator.barcode == barcode).first()
+        
+        if existing_entry:
+            duplicates.append(barcode)
+            continue
+        
         new_entry = Gator(
             wb_id = row.get('wb_id'),
-            barcode = row.get('barcode'),
+            barcode = barcode, 
             title_no = row.get('title_no'),
             title_desc = row.get('title_desc'),
             mpm_number = row.get('mpm_number'),
@@ -136,5 +142,9 @@ async def upload_file(file:UploadFile=File(...), db: Session = Depends(get_db)):
         )
         db.add(new_entry)
     db.commit()
-    return {'message': "File processed successfully"}        
+    
+    if duplicates:
+        return{'message': 'File Processed with duplicates skipped', 'duplicates': duplicates}
+    else:
+        return {'message': "File processed successfully"}        
 
