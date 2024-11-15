@@ -1,13 +1,15 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import Session
+import sys
+sys.path.append('/home/addGatorExcelToAlfred_APP/API/')
 from routes import wb_projects, md5_verify_queue, gator
 from database import engine
 import models.wb_projects
 from cors import add_cors
 
 
-app = FastAPI()
+app = FastAPI(root_path="/api")
 add_cors(app)
 
 
